@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVENTRA | Tu viaje a festivales y conciertos sin complicaciones</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#070812',
+                            card: '#101426',
+                            pink: '#FF007F',
+                            yellow: '#FFC700',
+                            purple: '#9D4EDD',
+                            electricBlue: '#00F5FF',
+                            neonLime: '#00FF85',
+                            accentPink: '#FF2A85'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'festive-pink': '0 0 30px -5px rgba(255, 0, 127, 0.6)',
+                        'festive-yellow': '0 0 30px -5px rgba(255, 199, 0, 0.5)',
+                        'festive-blue': '0 0 30px -5px rgba(0, 245, 255, 0.5)',
+                        'festive-lime': '0 0 25px -5px rgba(0, 255, 133, 0.5)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.45)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #070812;
+            color: #F3F4F6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Festive Spotlights & Laser Glows */
+        .glow-blob-pink {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle, #FF007F 0%, transparent 70%);
+        }
+
+        .glow-blob-yellow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.45;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle, #FFC700 0%, transparent 70%);
+        }
+
+        .glow-blob-blue {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle, #00F5FF 0%, transparent 70%);
+        }
+
+        /* Glassmorphism card */
+        .glass-card {
+            background: rgba(16, 20, 38, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-nav {
+            background: rgba(7, 8, 18, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Multi-tone Festive Gradient Text */
+        .gradient-text-festive {
+            background: linear-gradient(135deg, #FF007F 0%, #FFC700 45%, #00F5FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-text-gold {
+            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Festive Card Borders */
+        .gradient-border-card {
+            position: relative;
+            background: rgba(16, 20, 38, 0.85);
+            border-radius: 1.25rem;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gradient-border-card::before {
+            content: '';
+            position: absolute;
+            inset: -1.5px;
+            border-radius: 1.3rem;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(255, 0, 127, 0.6), rgba(255, 199, 0, 0.4), rgba(0, 245, 255, 0.6));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .gradient-border-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 15px 35px -10px rgba(255, 0, 127, 0.35);
+        }
+
+        .gradient-border-card:hover::before {
+            background: linear-gradient(135deg, #FF007F, #FFC700, #00FF85, #00F5FF);
+        }
+
+        /* Pulse Animation for Party Vibe */
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .animate-glow-pulse {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 9px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070812;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #251B42;
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF007F;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-brand-pink selection:text-white">
+
+    <!-- Glowing Festive Stage Lights in Background -->
+    <div class="glow-blob-pink w-[600px] h-[600px] -top-30 -left-20 animate-glow-pulse"></div>
+    <div class="glow-blob-yellow w-[500px] h-[500px] top-[20%] -right-20"></div>
+    <div class="glow-blob-blue w-[650px] h-[650px] top-[55%] -left-30"></div>
+    <div class="glow-blob-pink w-[550px] h-[550px] bottom-10 right-10"></div>
+
+    <!-- ================= 1. HEADER ================= -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Festive Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-pink via-brand-yellow to-brand-electricBlue flex items-center justify-center shadow-festive-pink group-hover:rotate-12 transition-transform">
+                        <i class="fa-solid fa-compact-disc text-slate-950 text-2xl animate-spin" style="animation-duration: 8s;"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black tracking-wider text-white leading-none">EVENT<span class="gradient-text-festive">RA</span></span>
+                        <span class="text-[10px] font-bold text-brand-yellow tracking-widest uppercase">Festivals & Live Trips</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-200">
+                    <a href="#caracteristicas" class="hover:text-brand-pink transition-colors">¿Por qué EVENTRA?</a>
+                    <a href="#eventos" class="hover:text-brand-yellow transition-colors">Eventos Top</a>
+                    <a href="#cotizador" class="hover:text-brand-electricBlue transition-colors">Simulador</a>
+                    <a href="#testimonios" class="hover:text-brand-pink transition-colors">Reseñas</a>
+                    <a href="#faq" class="hover:text-brand-yellow transition-colors">FAQ</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden sm:flex items-center gap-4">
+                    <button onclick="openModal()" class="relative group overflow-hidden rounded-full p-[2px] focus:outline-none">
+                        <span class="absolute inset-0 bg-gradient-to-r from-brand-pink via-brand-yellow to-brand-electricBlue rounded-full animate-pulse"></span>
+                        <span class="relative px-6 py-2.5 rounded-full bg-brand-dark flex items-center gap-2 text-sm font-extrabold text-white transition group-hover:bg-opacity-80">
+                            <span>🎉 Cotiza tu viaje</span>
+                            <i class="fa-solid fa-arrow-right text-xs text-brand-yellow group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-200 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl text-brand-pink"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-gray-800 px-6 pt-4 pb-6 space-y-4">
+            <a href="#caracteristicas" class="block text-gray-200 hover:text-brand-pink py-2 font-bold">¿Por qué EVENTRA?</a>
+            <a href="#eventos" class="block text-gray-200 hover:text-brand-yellow py-2 font-bold">Eventos Top</a>
+            <a href="#cotizador" class="block text-gray-200 hover:text-brand-electricBlue py-2 font-bold">Simulador de Costos</a>
+            <a href="#faq" class="block text-gray-200 hover:text-brand-pink py-2 font-bold">Preguntas Frecuentes</a>
+            <button onclick="openModal()" class="w-full mt-2 py-3.5 bg-gradient-to-r from-brand-pink via-brand-purple to-brand-electricBlue text-white font-extrabold rounded-xl shadow-festive-pink text-base">
+                🚀 Cotiza tu viaje gratis
+            </button>
+        </div>
+    </header>
+
+
+    <!-- ================= 2. HERO SECTION ================= -->
+    <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column Text -->
+                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                    
+                    <!-- Festive Trust Badge -->
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-brand-pink/50 text-xs sm:text-sm font-extrabold text-white shadow-festive-pink">
+                        <span class="flex h-2.5 w-2.5 rounded-full bg-brand-neonLime animate-ping"></span>
+                        <span class="text-brand-yellow">🔥 MODALIDAD FESTIVAL 2026</span>
+                        <span class="text-gray-400">|</span>
+                        <span>Experiencia VIP 360°</span>
+                    </div>
+
+                    <!-- Main Headline -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.12]">
+                        ¡Vive el festival! <br/>
+                        <span class="gradient-text-festive">sin preocupaciones ni estrés</span>
+                    </h1>
+
+                    <!-- Subtitle / Support Text -->
+                    <p class="text-lg sm:text-xl text-gray-200 max-w-2xl font-medium leading-relaxed mx-auto lg:mx-0">
+                        Hacemos toda la magia logística: <strong class="text-brand-yellow">boletos 100% oficiales</strong>, <strong class="text-brand-pink">hospedajes verificados cerca del show</strong> y <strong class="text-brand-electricBlue">transporte privado post-evento</strong>. ¡Tú y tus amigos solo piensen en cantar a todo pulmón! 🎪✨
+                    </p>
+
+                    <!-- CTAs & Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <button onclick="openModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-pink via-purple-600 to-brand-electricBlue hover:opacity-95 text-white font-black text-lg shadow-festive-pink transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-ticket-simple text-brand-yellow text-xl"></i>
+                            <span>Cotizar Paquete Festivo</span>
+                        </button>
+                        <a href="#cotizador" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-card hover:bg-slate-800/80 text-white font-bold text-lg border border-brand-yellow/40 transition-all flex items-center justify-center gap-2 shadow-festive-yellow">
+                            <span>Calcular en Vivo</span>
+                            <i class="fa-solid fa-calculator text-brand-yellow"></i>
+                        </a>
+                    </div>
+
+                    <!-- Social Proof / Quick Stats -->
+                    <div class="pt-6 border-t border-slate-800/80 grid grid-cols-3 gap-4 text-center lg:text-left">
+                        <div class="bg-slate-900/40 p-3 rounded-2xl border border-pink-500/20">
+                            <p class="text-2xl sm:text-3xl font-black text-brand-pink">18k+</p>
+                            <p class="text-xs text-gray-300 font-semibold">Festivaleros Felices</p>
+                        </div>
+                        <div class="bg-slate-900/40 p-3 rounded-2xl border border-yellow-500/20">
+                            <p class="text-2xl sm:text-3xl font-black text-brand-yellow">100%</p>
+                            <p class="text-xs text-gray-300 font-semibold">Regreso Seguro</p>
+                        </div>
+                        <div class="bg-slate-900/40 p-3 rounded-2xl border border-cyan-500/20">
+                            <p class="text-2xl sm:text-3xl font-black text-brand-electricBlue">4.9 ★</p>
+                            <p class="text-xs text-gray-300 font-semibold">+3,100 Reseñas</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Hero Right Column Visual Graphic -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        
+                        <!-- Glow Aura Behind Image -->
+                        <div class="absolute -inset-2 rounded-3xl bg-gradient-to-r from-brand-pink via-brand-yellow to-brand-electricBlue opacity-70 blur-xl animate-pulse"></div>
+
+                        <!-- Main Festival Image Card -->
+                        <div class="relative rounded-2xl overflow-hidden border border-white/20 glass-card p-2">
+                            <div class="relative h-96 rounded-xl overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1000&q=80" 
+                                     alt="Festival de música luces EVENTRA" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/30 to-transparent"></div>
+                                
+                                <!-- Floating VIP Ticket Card Preview Badge -->
+                                <div class="absolute bottom-4 left-4 right-4 glass-card p-4 rounded-xl border border-brand-yellow/40 space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs font-black tracking-wider text-brand-yellow uppercase flex items-center gap-1">
+                                            <i class="fa-solid fa-crown text-brand-yellow"></i> Paquete Recomendado
+                                        </span>
+                                        <span class="bg-brand-pink text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase shadow-festive-pink">VIP PASS</span>
+                                    </div>
+                                    <h4 class="text-white font-extrabold text-lg">Corona Capital 2026</h4>
+                                    <div class="flex items-center justify-between text-xs text-gray-200 pt-2 border-t border-slate-700/80">
+                                        <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-hotel text-brand-pink"></i> Hotel 4★ Top</span>
+                                        <span class="flex items-center gap-1 font-semibold"><i class="fa-solid fa-van-shuttle text-brand-electricBlue"></i> Van Privada VIP</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge Decorative Graphic 1 -->
+                        <div class="absolute -top-6 -right-6 glass-card p-4 rounded-2xl border border-brand-pink shadow-festive-pink hidden sm:flex items-center gap-3 animate-bounce" style="animation-duration: 4s;">
+                            <div class="w-12 h-12 rounded-xl bg-brand-pink/20 flex items-center justify-center text-brand-pink text-2xl">
+                                🎟️
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-300 font-medium">Cero Sorpresas</p>
+                                <p class="text-sm font-black text-white">Precios Fijos Sin Tarifas Dinámicas</p>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge Decorative Graphic 2 -->
+                        <div class="absolute -bottom-6 -left-6 glass-card p-4 rounded-2xl border border-brand-electricBlue shadow-festive-blue hidden sm:flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-brand-electricBlue/20 flex items-center justify-center text-brand-electricBlue text-2xl">
+                                🥳
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-300 font-medium">¿Viajas con amigos?</p>
+                                <p class="text-sm font-black text-white">Link de Pago Dividido por Persona</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= 3. FEATURES SECTION (CARACTERÍSTICAS) ================= -->
+    <section id="caracteristicas" class="py-24 relative z-10 bg-slate-950/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="px-4 py-1.5 rounded-full bg-brand-pink/20 text-brand-pink text-xs font-black uppercase tracking-widest border border-brand-pink/30">
+                    ✨ La Experiencia Sin Complicaciones
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white">Diseñado para que tu única tarea sea disfrutar</h2>
+                <p class="text-gray-300 text-base">Eliminamos el caos de la logística masiva con soluciones hechas a la medida de tu grupo.</p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Feature Card 1 -->
+                <div class="gradient-border-card p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-pink to-pink-800 flex items-center justify-center mb-6 text-white text-2xl shadow-festive-pink group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bus-simple"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white mb-3">Transporte Post-Evento Garantizado</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            A las 2 AM no pelees por Uber ni sufras tarifas de $1,500 MXN. Tu transporte privado te espera a unos pasos de la salida para llevarte seguro a tu hotel.
+                        </p>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-slate-800 text-xs text-brand-yellow font-extrabold flex items-center gap-2">
+                        <span>Sin filas ni esperas</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Feature Card 2 -->
+                <div class="gradient-border-card p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-yellow to-amber-700 flex items-center justify-center mb-6 text-slate-950 text-2xl shadow-festive-yellow group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-cubes"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white mb-3">Paquetes Modulares Flexibles</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Arma el viaje a tu gusto. Elige boletos oficiales verificados, hoteles cercanos con check-in garantizado y shuttles ejecutivos según tu presupuesto.
+                        </p>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-slate-800 text-xs text-brand-yellow font-extrabold flex items-center gap-2">
+                        <span>Personalización 100%</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Feature Card 3 -->
+                <div class="gradient-border-card p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-neonLime to-emerald-700 flex items-center justify-center mb-6 text-slate-950 text-2xl shadow-festive-lime group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white mb-3">Precios 100% Transparentes</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Cero comisiones ocultas ni sorpresas de último momento. Lo que cotizas es lo que pagas. Opción de pagos quincenales y diferidos.
+                        </p>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-slate-800 text-xs text-brand-neonLime font-extrabold flex items-center gap-2">
+                        <span>Aparta desde $500 MXN</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Feature Card 4 -->
+                <div class="gradient-border-card p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-electricBlue to-cyan-800 flex items-center justify-center mb-6 text-slate-950 text-2xl shadow-festive-blue group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-users-rays"></i>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white mb-3">Coordinación de Grupos</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Organizar a tus amigos ya no es un dolor de cabeza. Generamos links de pago individuales para que cada quien pague su parte manteniendo el grupo unido.
+                        </p>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-slate-800 text-xs text-brand-electricBlue font-extrabold flex items-center gap-2">
+                        <span>Links de cobro divididos</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= 4. INTERACTIVE SIMULATOR / CALCULATOR ================= -->
+    <section id="cotizador" class="py-20 relative z-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card p-8 md:p-12 rounded-3xl border border-brand-pink/40 relative overflow-hidden shadow-festive-pink">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-6 space-y-6">
+                        <span class="bg-brand-yellow/20 text-brand-yellow text-xs font-black px-3.5 py-1.5 rounded-full border border-brand-yellow/40 uppercase tracking-wider">
+                            ⚡ Calculador Festivo
+                        </span>
+                        <h3 class="text-3xl font-black text-white">Simula tu presupuesto en vivo</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Ajusta el número de amigos y el nivel de hospedaje para obtener un costo estimado al instante.
+                        </p>
+
+                        <!-- Controls -->
+                        <div class="space-y-5 pt-2">
+                            <!-- Number of People Slider -->
+                            <div>
+                                <div class="flex justify-between text-sm font-bold mb-2">
+                                    <label class="text-gray-200">Número de Amigos:</label>
+                                    <span id="people-count" class="text-brand-yellow font-black text-base">2 Personas</span>
+                                </div>
+                                <input id="people-range" type="range" min="1" max="12" value="2" 
+                                       class="w-full h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-pink">
+                            </div>
+
+                            <!-- Hotel Quality -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-200 mb-2">Categoría de Hospedaje:</label>
+                                <select id="hotel-select" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-3.5 text-sm font-semibold focus:outline-none focus:border-brand-pink">
+                                    <option value="1500">Hotel Confort 3★ (Práctico y bien ubicado)</option>
+                                    <option value="2600" selected>Hotel Festival 4★ (Desayuno e instalaciones top)</option>
+                                    <option value="4200">Hotel VIP 5★ (Lujo absoluto post-concierto)</option>
+                                </select>
+                            </div>
+
+                            <!-- Transport Options -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-200 mb-2">Tipo de Transporte:</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="transport" value="650" checked class="peer sr-only">
+                                        <div class="p-3.5 rounded-xl border border-slate-700 bg-slate-900/60 text-center peer-checked:border-brand-pink peer-checked:bg-brand-pink/20 transition">
+                                            <p class="text-xs font-black text-white">Shuttle Compartido</p>
+                                            <p class="text-[11px] text-gray-400">Punto a punto</p>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="transport" value="1300" class="peer sr-only">
+                                        <div class="p-3.5 rounded-xl border border-slate-700 bg-slate-900/60 text-center peer-checked:border-brand-yellow peer-checked:bg-brand-yellow/20 transition">
+                                            <p class="text-xs font-black text-white">Van Privada VIP</p>
+                                            <p class="text-[11px] text-gray-400">Exclusiva tu grupo</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Preview Result Box -->
+                    <div class="lg:col-span-6 bg-slate-950/90 p-8 rounded-2xl border border-brand-yellow/30 text-center flex flex-col justify-between h-full space-y-6 shadow-festive-yellow">
+                        <div class="space-y-2">
+                            <p class="text-xs text-gray-400 uppercase font-bold tracking-widest">Costo estimado por persona</p>
+                            <p id="total-per-person" class="text-4xl sm:text-5xl font-black text-brand-yellow">$3,250 <span class="text-xs text-gray-400 font-normal">MXN</span></p>
+                            <p id="total-group" class="text-xs text-brand-electricBlue font-bold">Total del grupo (2 personas): $6,500 MXN</p>
+                        </div>
+
+                        <div class="space-y-3 text-left text-xs text-gray-200 bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                            <div class="flex justify-between items-center">
+                                <span><i class="fa-solid fa-circle-check text-brand-neonLime mr-2"></i>Boleto oficial garantizado</span>
+                                <span class="text-brand-neonLime font-bold">Incluido</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span><i class="fa-solid fa-circle-check text-brand-neonLime mr-2"></i>Hospedaje (2 noches)</span>
+                                <span class="text-brand-neonLime font-bold">Incluido</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span><i class="fa-solid fa-circle-check text-brand-neonLime mr-2"></i>Traslados post-show</span>
+                                <span class="text-brand-neonLime font-bold">Garantizado</span>
+                            </div>
+                        </div>
+
+                        <button onclick="openModal()" class="w-full py-4 bg-gradient-to-r from-brand-pink via-brand-yellow to-brand-electricBlue hover:opacity-95 text-slate-950 font-black rounded-xl transition shadow-festive-pink text-base">
+                            🔥 Aparta con $500 MXN / persona
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= 5. UPCOMING EVENTS SHOWCASE ================= -->
+    <section id="eventos" class="py-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs font-black uppercase tracking-widest text-brand-yellow">🎉 Agenda 2026</span>
+                    <h2 class="text-3xl font-black text-white mt-1">Próximos Festivales & Conciertos Top</h2>
+                </div>
+
+                <!-- Event Filter Tabs -->
+                <div class="flex gap-2 mt-4 md:mt-0 overflow-x-auto pb-2">
+                    <button class="event-filter active px-5 py-2.5 rounded-full text-xs font-black bg-brand-pink text-white shadow-festive-pink transition">Todos</button>
+                    <button class="event-filter px-5 py-2.5 rounded-full text-xs font-black bg-slate-800 text-gray-300 hover:bg-slate-700 transition">Festivales</button>
+                    <button class="event-filter px-5 py-2.5 rounded-full text-xs font-black bg-slate-800 text-gray-300 hover:bg-slate-700 transition">Conciertos</button>
+                    <button class="event-filter px-5 py-2.5 rounded-full text-xs font-black bg-slate-800 text-gray-300 hover:bg-slate-700 transition">Deportes</button>
+                </div>
+            </div>
+
+            <!-- Event Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Event 1 -->
+                <div class="gradient-border-card overflow-hidden group">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80" alt="Festival Tecate Pa'l Norte" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-3 left-3 bg-brand-pink/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-black text-white shadow-festive-pink">
+                            🎪 Festival
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <h4 class="text-xl font-extrabold text-white">Tecate Pa'l Norte 2026</h4>
+                            <p class="text-xs text-gray-300 mt-1"><i class="fa-solid fa-location-dot text-brand-pink mr-1"></i> Parque Fundidora, Monterrey</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-200 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                            <span><i class="fa-regular fa-calendar text-brand-yellow mr-1"></i> 18 - 20 Noviembre</span>
+                            <span class="text-brand-neonLime font-bold">Últimos Paquetes</span>
+                        </div>
+                        <button onclick="openModal('Tecate Pa\'l Norte 2026')" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-brand-pink text-white font-bold text-sm transition duration-300 flex items-center justify-center gap-2">
+                            <span>Cotizar este evento</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="gradient-border-card overflow-hidden group">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80" alt="Concierto Estadio" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-3 left-3 bg-brand-yellow/90 text-slate-950 backdrop-blur-md px-3 py-1 rounded-full text-xs font-black shadow-festive-yellow">
+                            🎶 Concierto
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <h4 class="text-xl font-extrabold text-white">Coldplay World Tour</h4>
+                            <p class="text-xs text-gray-300 mt-1"><i class="fa-solid fa-location-dot text-brand-yellow mr-1"></i> Estadio GNP Seguros, CDMX</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-200 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                            <span><i class="fa-regular fa-calendar text-brand-electricBlue mr-1"></i> 05 Diciembre</span>
+                            <span class="text-brand-yellow font-bold">Hotel + Transporte</span>
+                        </div>
+                        <button onclick="openModal('Coldplay Tour')" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-brand-yellow hover:text-slate-950 text-white font-bold text-sm transition duration-300 flex items-center justify-center gap-2">
+                            <span>Cotizar este evento</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="gradient-border-card overflow-hidden group">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80" alt="Gran Premio Deportes" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-3 left-3 bg-brand-electricBlue/90 text-slate-950 backdrop-blur-md px-3 py-1 rounded-full text-xs font-black shadow-festive-blue">
+                            🏎️ Deportes
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <h4 class="text-xl font-extrabold text-white">Gran Premio F1 México</h4>
+                            <p class="text-xs text-gray-300 mt-1"><i class="fa-solid fa-location-dot text-brand-electricBlue mr-1"></i> Autódromo Hermanos Rodríguez</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-200 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                            <span><i class="fa-regular fa-calendar text-brand-pink mr-1"></i> 25-27 Octubre</span>
+                            <span class="text-brand-electricBlue font-bold">Shuttle VIP</span>
+                        </div>
+                        <button onclick="openModal('F1 GP México')" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-brand-electricBlue hover:text-slate-950 text-white font-bold text-sm transition duration-300 flex items-center justify-center gap-2">
+                            <span>Cotizar este evento</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= 6. TESTIMONIALS (RESEÑAS) ================= -->
+    <section id="testimonios" class="py-20 relative z-10 bg-slate-950/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs font-black uppercase tracking-widest text-brand-pink">❤️ Comunidad Eventra</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">Lo que opinan nuestros festivaleros</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="glass-card p-6 rounded-2xl border border-brand-pink/30 space-y-4">
+                    <div class="flex items-center gap-1 text-brand-yellow text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-200 text-sm italic">
+                        "Lo mejor fue salir del festival agotada a las 2:30 AM y tener la van esperándonos en el punto acordado. ¡Cero peleas por Uber de $1,300 pesos!"
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-slate-800">
+                        <div class="w-10 h-10 rounded-full bg-brand-pink flex items-center justify-center font-black text-white text-sm shadow-festive-pink">
+                            VP
+                        </div>
+                        <div>
+                            <h5 class="text-white font-extrabold text-sm">Valeria Paéz</h5>
+                            <p class="text-xs text-gray-400">Asistió a Corona Capital</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border border-brand-yellow/30 space-y-4">
+                    <div class="flex items-center gap-1 text-brand-yellow text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-200 text-sm italic">
+                        "Fuimos un grupo de 6 desde Guadalajara. Cada quien pagó su parte mediante el enlace de EVENTRA. Súper cómodo y el hotel estuvo excelente."
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-slate-800">
+                        <div class="w-10 h-10 rounded-full bg-brand-yellow flex items-center justify-center font-black text-slate-950 text-sm shadow-festive-yellow">
+                            DR
+                        </div>
+                        <div>
+                            <h5 class="text-white font-extrabold text-sm">Daniel Ríos</h5>
+                            <p class="text-xs text-gray-400">Asistió a Vive Latino</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border border-brand-electricBlue/30 space-y-4">
+                    <div class="flex items-center gap-1 text-brand-yellow text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-200 text-sm italic">
+                        "Cero comisiones raras al pagar. Lo diferimos a meses y el servicio del staff en el punto de encuentro fue súper atento."
+                    </p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-slate-800">
+                        <div class="w-10 h-10 rounded-full bg-brand-electricBlue flex items-center justify-center font-black text-slate-950 text-sm shadow-festive-blue">
+                            MA
+                        </div>
+                        <div>
+                            <h5 class="text-white font-extrabold text-sm">Mariana Aguilar</h5>
+                            <p class="text-xs text-gray-400">Asistió a EDC México</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= 7. FAQ ACCORDION ================= -->
+    <section id="faq" class="py-20 relative z-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-xs font-black uppercase tracking-widest text-brand-yellow">❓ Dudas Frecuentes</span>
+                <h2 class="text-3xl font-black text-white">Preguntas Frecuentes</h2>
+            </div>
+
+            <div class="space-y-4">
+                
+                <!-- FAQ Item 1 -->
+                <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
+                    <button class="faq-toggle w-full p-5 text-left font-bold text-white flex justify-between items-center hover:bg-slate-800/40 transition">
+                        <span>¿Cómo opera el transporte de regreso post-evento?</span>
+                        <i class="fa-solid fa-chevron-down text-brand-pink transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden p-5 pt-0 text-sm text-gray-300 border-t border-slate-800/60">
+                        Tenemos un punto de encuentro coordinado a pocos minutos a pie del acceso principal del evento. Las unidades te esperan estacionadas con aire acondicionado, hidratación y coordinadores identificados. Sin esperas interminables.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
+                    <button class="faq-toggle w-full p-5 text-left font-bold text-white flex justify-between items-center hover:bg-slate-800/40 transition">
+                        <span>¿Los boletos para los eventos están garantizados?</span>
+                        <i class="fa-solid fa-chevron-down text-brand-yellow transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden p-5 pt-0 text-sm text-gray-300 border-t border-slate-800/60">
+                        100% garantizados. Todos los tickets provienen de boleteras oficiales autorizadas o convenios directos con promotores de espectáculos.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
+                    <button class="faq-toggle w-full p-5 text-left font-bold text-white flex justify-between items-center hover:bg-slate-800/40 transition">
+                        <span>¿Podemos dividir la cuenta entre amigos?</span>
+                        <i class="fa-solid fa-chevron-down text-brand-electricBlue transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden p-5 pt-0 text-sm text-gray-300 border-t border-slate-800/60">
+                        ¡Así es! Creamos una reserva de grupo y te proporcionamos un enlace para que cada amigo pague su parte individualmente con la tarjeta o método de su preferencia.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= 8. FINAL CTA BANNER ================= -->
+    <section class="py-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="gradient-border-card p-10 sm:p-16 text-center relative overflow-hidden bg-gradient-to-r from-pink-900/40 via-purple-900/30 to-cyan-900/40">
+                <div class="max-w-3xl mx-auto space-y-6 relative z-10">
+                    <h2 class="text-3xl sm:text-5xl font-black text-white">¿Listo para tu próximo gran concierto?</h2>
+                    <p class="text-gray-200 text-base sm:text-lg">
+                        Déjanos la logística a nosotros. Cotiza en menos de 2 minutos sin compromiso.
+                    </p>
+                    <button onclick="openModal()" class="px-10 py-4 bg-gradient-to-r from-brand-pink via-brand-yellow to-brand-electricBlue text-slate-950 font-black text-lg rounded-2xl shadow-festive-pink transition duration-300 hover:scale-105">
+                        🎉 Cotiza tu viaje ahora
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= 9. FOOTER ================= -->
+    <footer class="border-t border-slate-800 bg-slate-950/90 pt-16 pb-12 relative z-10 text-xs text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-pink to-brand-yellow flex items-center justify-center text-slate-950 font-black text-base">
+                            ⚡
+                        </div>
+                        <span class="text-xl font-black text-white">EVENTRA</span>
+                    </div>
+                    <p class="leading-relaxed">
+                        Plataforma de viajes y experiencias para festivales, conciertos y eventos multitudinarios en Latam.
+                    </p>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-extrabold text-sm mb-4">Servicios</h5>
+                    <ul class="space-y-2 font-medium">
+                        <li><a href="#" class="hover:text-brand-pink transition">Paquetes Todo Incluido</a></li>
+                        <li><a href="#" class="hover:text-brand-pink transition">Shuttles y Vans VIP</a></li>
+                        <li><a href="#" class="hover:text-brand-pink transition">Hoteles Cercanos</a></li>
+                        <li><a href="#" class="hover:text-brand-pink transition">Viajes de Grupo</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-extrabold text-sm mb-4">Legal & Soporte</h5>
+                    <ul class="space-y-2 font-medium">
+                        <li><a href="#" class="hover:text-brand-yellow transition">Términos y Condiciones</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition">Aviso de Privacidad</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition">Políticas de Cancelación</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition">Contacto WhatsApp</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-extrabold text-sm mb-4">¡Síguenos en la fiesta!</h5>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-brand-pink hover:text-white transition"><i class="fa-brands fa-instagram text-base"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-brand-pink hover:text-white transition"><i class="fa-brands fa-tiktok text-base"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-brand-pink hover:text-white transition"><i class="fa-brands fa-facebook-f text-base"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-brand-pink hover:text-white transition"><i class="fa-brands fa-whatsapp text-base"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-t border-slate-800/80 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-gray-400">
+                <p>© 2026 EVENTRA Inc. Todos los derechos reservados.</p>
+                <p>Hecho con <i class="fa-solid fa-heart text-brand-pink"></i> para los verdaderos amantes de la música.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ================= MODAL: COTIZA TU VIAJE ================= -->
+    <div id="quote-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="glass-card w-full max-w-lg p-6 sm:p-8 rounded-3xl border border-brand-pink/50 relative space-y-6 shadow-festive-pink">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="space-y-1">
+                <span class="text-xs font-black text-brand-yellow uppercase tracking-widest">✨ Cotización Personalizada</span>
+                <h3 class="text-2xl font-black text-white">Diseña tu viaje a la medida</h3>
+            </div>
+
+            <!-- Form -->
+            <form id="quote-form" onsubmit="handleFormSubmit(event)" class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs font-bold text-gray-200 mb-1">Evento de Interés</label>
+                    <input type="text" id="modal-event-input" placeholder="Ej: Corona Capital, Coldplay, EDC, etc." required
+                           class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-brand-pink font-medium">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-200 mb-1">Ciudad de Origen</label>
+                        <input type="text" placeholder="Ej: Guadalajara" required
+                               class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-brand-pink font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-200 mb-1">Nº de Personas</label>
+                        <input type="number" min="1" max="20" value="2" required
+                               class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-brand-pink font-medium">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-200 mb-1">Nombre Completo</label>
+                    <input type="text" placeholder="Tu nombre" required
+                           class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-brand-pink font-medium">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-200 mb-1">WhatsApp para enviarte la propuesta</label>
+                    <input type="tel" placeholder="+52 55 0000 0000" required
+                           class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-brand-pink font-medium">
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-gradient-to-r from-brand-pink via-brand-yellow to-brand-electricBlue hover:opacity-95 text-slate-950 font-black rounded-xl shadow-festive-pink transition mt-4 text-base">
+                    🚀 Enviar y Recibir Cotización en WhatsApp
+                </button>
+            </form>
+
+            <div id="modal-success" class="hidden text-center py-8 space-y-4">
+                <div class="w-16 h-16 bg-brand-neonLime/20 text-brand-neonLime rounded-full flex items-center justify-center mx-auto text-3xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h4 class="text-2xl font-black text-white">¡Solicitud Recibida!</h4>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    Un asesor de EVENTRA te enviará la mejor propuesta con boletos y hospedaje vía WhatsApp en menos de 15 minutos.
+                </p>
+                <button onclick="closeModal()" class="px-8 py-3 bg-slate-800 text-white rounded-xl text-xs font-bold">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // 1. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 2. Modal Controls
+        function openModal(eventName = '') {
+            const modal = document.getElementById('quote-modal');
+            const eventInput = document.getElementById('modal-event-input');
+            if (eventName) {
+                eventInput.value = eventName;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('quote-modal');
+            modal.classList.add('hidden');
+            document.getElementById('quote-form').classList.remove('hidden');
+            document.getElementById('modal-success').classList.add('hidden');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('quote-form').classList.add('hidden');
+            document.getElementById('modal-success').classList.remove('hidden');
+        }
+
+        // 3. Calculator Interactive Logic
+        const peopleRange = document.getElementById('people-range');
+        const peopleCountLabel = document.getElementById('people-count');
+        const hotelSelect = document.getElementById('hotel-select');
+        const totalPerPerson = document.getElementById('total-per-person');
+        const totalGroup = document.getElementById('total-group');
+
+        function updateCalculator() {
+            const count = parseInt(peopleRange.value);
+            peopleCountLabel.textContent = `${count} ${count === 1 ? 'Persona' : 'Personas'}`;
+
+            const hotelBase = parseInt(hotelSelect.value);
+            const transportVal = parseInt(document.querySelector('input[name="transport"]:checked').value);
+            const ticketBase = 1250; // Average Ticket price allocation
+
+            const costPerPerson = hotelBase + transportVal + ticketBase;
+            const groupCost = costPerPerson * count;
+
+            totalPerPerson.innerHTML = `$${costPerPerson.toLocaleString()} <span class="text-xs text-gray-400 font-normal">MXN</span>`;
+            totalGroup.textContent = `Total del grupo (${count} ${count === 1 ? 'persona' : 'personas'}): $${groupCost.toLocaleString()} MXN`;
+        }
+
+        peopleRange.addEventListener('input', updateCalculator);
+        hotelSelect.addEventListener('change', updateCalculator);
+        document.querySelectorAll('input[name="transport"]').forEach(radio => {
+            radio.addEventListener('change', updateCalculator);
+        });
+
+        // Initialize calculator
+        updateCalculator();
+
+        // 4. FAQ Accordion Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // 5. Filter Tabs Active State
+        document.querySelectorAll('.event-filter').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.event-filter').forEach(t => {
+                    t.classList.remove('bg-brand-pink', 'shadow-festive-pink', 'text-white');
+                    t.classList.add('bg-slate-800', 'text-gray-300');
+                });
+                tab.classList.remove('bg-slate-800', 'text-gray-300');
+                tab.classList.add('bg-brand-pink', 'shadow-festive-pink', 'text-white');
+            });
+        });
+    </script>
+</body>
+</html>
